@@ -25,11 +25,6 @@ module.exports = (req, res, next) => {
 
     const decoded = jwt.verify(tokenValue, JWT_SECRET);
 
-    if (Date.now() >= decoded.exp * 1000) {
-      const error = new APIError(401, "Unauthorized", "Token has expired");
-      return next(error);
-    }
-
     req.userId = decoded.userId;
     next();
   } catch (error) {
